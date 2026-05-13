@@ -1,10 +1,13 @@
 
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <ctime>
 #include <iomanip>
 #include <limits>
+#include <vector>
+
  
 using namespace std;
  
@@ -35,58 +38,111 @@ string nombreEstudiante       = "";
  
 // FUNCION PRINCIPAL
 int main() {
+    vector<string> estudiantes = {
+        "ACOSTA SOLIS HANNA AIDE",
+        "ANDRADE SANCHEZ HUGO ALEXANDER",
+        "ATIENCIA CHERRES JOSUE ALEXANDER",
+        "BALAREZO PEREZ DIEGO SEBASTIAN",
+        "BARRIONUEVO MONTESDEOCA JOB GABRIEL",
+        "BEDOYA MAZO JUAN MANUEL",
+        "BRAVO LOPEZ JORDAN SAMUEL",
+        "CAIZA CAIZABUANO JOSE RUBEN",
+        "CAJIAO VALDIVIESO PAULO ALESSANDRO",
+        "CALVOPIÑA HERRERA BRANDON ISRAEL",
+        "CASTELO BERRONES KATHERINE NICOL",
+        "CHACHA CHANGO VICTOR MANUEL",
+        "CHILUIZA QUISHPE DIEGO STEED",
+        "DOMINGUEZ LESCANO DANIEL SEBASTIAN",
+        "FREIRE AREBALO ALAN ANDERSON",
+        "GUALLE AUCANSHALA ABISAG LISENIA",
+        "GUAMAN CHANAHUANO HAMILTON ALEXANDER",
+        "GUANGA ALTAMIRANO EDWIN SEBASTIAN",
+        "GUANOTOA ESCOBAR KARLA LEONELA",
+        "LANDETA TAPIA EDISON PAUL",
+        "LARA BALSECA KAREN ARACELY",
+        "LOOR VELEZ JHON ALEJANDRO",
+        "LOPEZ SANCHEZ WASHINGTON STEVEN",
+        "MIRANDA GARCES ALAN IMANOL",
+        "MONAR PARCO JHAIR ALEXANDER",
+        "MUYULEMA MOYOLEMA MATEO ALEXANDER",
+        "NARVAEZ GAVILANES ANTONELLA NICOLE",
+        "NUÑEZ ESPIN BRYAN SEBASTIAN",
+        "PILCO FLORES MARIO DAVID",
+        "POMAQUERO CHANGO KATHERINE SOLEDAD",
+        "QUEVEDO AJON GINA ANAHI",
+        "RIVADENEYRA ULLOA MATIAS SEBASTIAN",
+        "ROCHA ROCHA CAROLINA ESTEFANIA",
+        "SANCHEZ LEMA ISAAC ADRIAN",
+        "SEGOVIA GARCIA JOSEPH ANDRE",
+        "SUPE GARCES JOAN SEBASTIAN",
+        "TOAPANTA IZA KEVIN MATIAS",
+        "VERDESOTO AZOGUE KEVIN ALEXANDER",
+        "VILLACRES TOALOMBO JOSUE ALEJANDRO",
+        "VITERI CAMINO MAYDELIN SHANTAL"
+    };
+
     int opcion;
- 
-    // Solicitar nombre del estudiante al inicio
+
     cout << "=============================================" << endl;
     cout << "   APLICATIVO INTERACTIVO - UTA 2026        " << endl;
     cout << "   Algoritmos y Logica de Programacion      " << endl;
     cout << "=============================================" << endl;
-    cout << "\nIngrese su nombre completo: ";
-    getline(cin, nombreEstudiante);
- 
-    // Bucle principal del menu (do-while)
-    do {
-        mostrarMenu();
-        cout << "Seleccione una opcion: ";
-        cin >> opcion;
- 
-        // Validar entrada numerica
-        while (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Opcion invalida. Ingrese un numero: ";
+
+    for (int i = 0; i < estudiantes.size(); i++) {
+        nombreEstudiante = estudiantes[i];
+
+        notasRegistradas = false;
+        matRegistradas = false;
+
+        cout << "\n=============================================" << endl;
+        cout << " Estudiante actual: " << nombreEstudiante << endl;
+        cout << "=============================================" << endl;
+
+        do {
+            mostrarMenu();
+            cout << "Seleccione una opcion: ";
             cin >> opcion;
-        }
-        cin.ignore();
- 
-        switch (opcion) {
-            case 1:
-                operacionesMatematicas();
-                break;
-            case 2:
-                registroNotas();
-                break;
-            case 3:
-                guardarResultados(nombreEstudiante, notasGlobal, 5,
-                                  promedioGlobal, mayorGlobal, menorGlobal,
-                                  aprobadosGlobal, reprobadosGlobal,
-                                  resultadosMatGlobal, operacionesNombre);
-                break;
-            case 4:
-                cout << "\n  Hasta luego, " << nombreEstudiante << "!" << endl;
-                cout << "  Programa finalizado correctamente." << endl;
-                break;
-            default:
-                cout << "\n  [!] Opcion no valida. Intente de nuevo." << endl;
-                pausar();
-        }
- 
-    } while (opcion != 4);
- 
+
+            while (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Opcion invalida. Ingrese un numero: ";
+                cin >> opcion;
+            }
+            cin.ignore();
+
+            switch (opcion) {
+                case 1:
+                    operacionesMatematicas();
+                    break;
+
+                case 2:
+                    registroNotas();
+                    break;
+
+                case 3:
+                    guardarResultados(nombreEstudiante, notasGlobal, 5,
+                                      promedioGlobal, mayorGlobal, menorGlobal,
+                                      aprobadosGlobal, reprobadosGlobal,
+                                      resultadosMatGlobal, operacionesNombre);
+                    break;
+
+                case 4:
+                    cout << "\nPasando al siguiente estudiante..." << endl;
+                    break;
+
+                default:
+                    cout << "\n[!] Opcion no valida. Intente de nuevo." << endl;
+                    pausar();
+            }
+
+        } while (opcion != 4);
+    }
+
+    cout << "\nTodos los estudiantes fueron procesados." << endl;
+
     return 0;
-}
- 
+} 
 // MENU INTERACTIVO
 void mostrarMenu() {
     cout << "\n=============================================" << endl;
@@ -222,7 +278,7 @@ void guardarResultados(string nombre, double notas[], int n,
         return;
     }
  
-    ofstream archivo("resultados.txt", ios::app); 
+    ofstream archivo("resultados.txt", ios::app); // append para no sobrescribir
  
     if (!archivo.is_open()) {
         cout << "\n  [!] Error al abrir el archivo resultados.txt" << endl;
